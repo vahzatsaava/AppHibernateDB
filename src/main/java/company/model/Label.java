@@ -19,9 +19,8 @@ public class Label {
 
     }
 
-    public Label(String name, Post post) {
+    public Label(String name) {
         this.name = name;
-        this.post = post;
     }
 
     public int getId() {

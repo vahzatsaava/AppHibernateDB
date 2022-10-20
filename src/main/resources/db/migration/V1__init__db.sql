@@ -6,7 +6,6 @@ CREATE TABLE if not exists labels
     FOREIGN KEY (post_id) REFERENCES posts(id),
     primary key (id),
     unique (post_id)
-
 )
 
 CREATE TABLE IF NOT EXISTS posts

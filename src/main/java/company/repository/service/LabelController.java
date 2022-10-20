@@ -1,4 +1,4 @@
-package company.service;
+package company.repository.service;
 
 import company.model.Label;
 import company.repository.LabelRepository;
