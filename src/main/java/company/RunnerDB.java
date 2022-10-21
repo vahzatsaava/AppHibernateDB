@@ -19,11 +19,10 @@ public class RunnerDB {
         Writer writer = new Writer("Garry","Gudini");
         Post post = new Post("tv",new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()));
         Label label = new Label("TV");
-        System.out.println(writer);
+
 
        Label newLabel = new Label("fetch");
-       postgresLabelRepository.save(newLabel);
-
+        System.out.println(postgresPostRepository.getLabels(1));
 
 
 

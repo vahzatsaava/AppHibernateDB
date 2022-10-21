@@ -2,10 +2,9 @@ CREATE TABLE if not exists labels
 (
     id serial not null,
     name varchar not null,
-    post_id int not null,
+    post_id int,
     FOREIGN KEY (post_id) REFERENCES posts(id),
     primary key (id),
-    unique (post_id)
 )
 
 CREATE TABLE IF NOT EXISTS posts
@@ -14,10 +13,9 @@ CREATE TABLE IF NOT EXISTS posts
     content VARCHAR(50) NOT NULL ,
     created DATE NOT NULL ,
     updated DATE NOT NULL,
-    writer_id int not null,
+    writer_id int ,
     FOREIGN KEY(writer_id) REFERENCES writers(id),
     PRIMARY KEY (id),
-    unique (writer_id)
 )
 
 CREATE TABLE if not exists writers

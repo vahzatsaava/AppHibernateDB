@@ -1,6 +1,7 @@
 package company.repository.postgres;
 
 import company.model.Label;
+import company.model.Post;
 import company.repository.LabelRepository;
 import company.postgres_db_utils.HibernateSessionFactory;
 import org.hibernate.Session;
@@ -63,5 +64,18 @@ public class PostgresLabelRepositoryImpl implements LabelRepository {
         query.executeUpdate();
         transaction.commit();
         session.close();
+    }
+
+    @Override
+    public Label saveLabelAndAddPost(int postID, Label label)  {
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(label);
+        Post existPost = session.get(Post.class, postID);
+        session.saveOrUpdate(existPost);
+        label.setPost(existPost);
+        transaction.commit();
+        session.close();
+        return label;
     }
 }

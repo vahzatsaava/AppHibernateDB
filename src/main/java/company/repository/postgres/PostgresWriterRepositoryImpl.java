@@ -57,8 +57,10 @@ public class PostgresWriterRepositoryImpl implements WriterRepository {
         Query query = session.createQuery("delete from Writer where id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
+
+    }
+    private void closeSessionAndCommitTransaction(Session session, Transaction transaction) {
         transaction.commit();
         session.close();
-
     }
 }

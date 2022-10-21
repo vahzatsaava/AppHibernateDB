@@ -1,6 +1,7 @@
 package company.model;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 
