@@ -15,7 +15,11 @@ import java.util.List;
 public class PostgresPostRepositoryImpl implements PostRepository {
     @Override
     public Post findByID(int id) {
-        return HibernateSessionFactory.getSessionFactory().openSession().get(Post.class, id);
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Post post = session.get(Post.class, id);
+        closeSessionAndCommitTransaction(session, transaction);
+        return post;
     }
 
     @Override

@@ -15,11 +15,9 @@ public class PostgresLabelRepositoryImpl implements LabelRepository {
     public Label findByID(int id) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from Label d WHERE d.id = id");
-        List<Label> labels = query.getResultList();
-        transaction.commit();
-        session.close();
-        return labels.stream().filter(i -> i.getId() == id).findFirst().orElse(null);
+        Label label = session.get(Label.class, id);
+        closeSessionAndCommitTransaction(session, transaction);
+        return label;
     }
 
     @Override
@@ -27,8 +25,7 @@ public class PostgresLabelRepositoryImpl implements LabelRepository {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.save(label);
-        transaction.commit();
-        session.close();
+        closeSessionAndCommitTransaction(session, transaction);
         return label;
     }
 
@@ -39,8 +36,7 @@ public class PostgresLabelRepositoryImpl implements LabelRepository {
         Label newLabel = session.get(Label.class, id);
         newLabel.setName(label.getName());
         session.update(newLabel);
-        transaction.commit();
-        session.close();
+        closeSessionAndCommitTransaction(session, transaction);
         return newLabel;
     }
 
@@ -50,8 +46,7 @@ public class PostgresLabelRepositoryImpl implements LabelRepository {
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("FROM Label ");
         List<Label> labels = query.getResultList();
-        transaction.commit();
-        session.close();
+        closeSessionAndCommitTransaction(session, transaction);
         return labels;
     }
 
@@ -62,20 +57,23 @@ public class PostgresLabelRepositoryImpl implements LabelRepository {
         Query query = session.createQuery("delete from Label where id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
-        transaction.commit();
-        session.close();
+        closeSessionAndCommitTransaction(session, transaction);
     }
 
     @Override
-    public Label saveLabelAndAddPost(int postID, Label label)  {
+    public Label saveLabelAndAddPost(int postID, Label label) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.save(label);
         Post existPost = session.get(Post.class, postID);
         session.saveOrUpdate(existPost);
         label.setPost(existPost);
+        closeSessionAndCommitTransaction(session, transaction);
+        return label;
+    }
+
+    private void closeSessionAndCommitTransaction(Session session, Transaction transaction) {
         transaction.commit();
         session.close();
-        return label;
     }
 }

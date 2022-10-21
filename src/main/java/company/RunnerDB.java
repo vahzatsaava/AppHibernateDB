@@ -22,7 +22,7 @@ public class RunnerDB {
 
 
        Label newLabel = new Label("fetch");
-        System.out.println(postgresPostRepository.getLabels(1));
+        System.out.println(postgresLabelRepository.findByID(3));
 
 
 

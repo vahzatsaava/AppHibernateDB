@@ -20,8 +20,7 @@ public class PostgresWriterRepositoryImpl implements WriterRepository {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.save(writer);
-        transaction.commit();
-        session.close();
+        closeSessionAndCommitTransaction(session,transaction);
         return writer;
     }
 
@@ -34,8 +33,7 @@ public class PostgresWriterRepositoryImpl implements WriterRepository {
         query.setParameter("lastName", writer.getFirstName());
         query.setParameter("id", writer.getId());
         query.executeUpdate();
-        transaction.commit();
-        session.close();
+        closeSessionAndCommitTransaction(session,transaction);
         return writer;
     }
 
@@ -45,8 +43,7 @@ public class PostgresWriterRepositoryImpl implements WriterRepository {
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("from Writer ");
         List<Writer> writers = query.getResultList();
-        transaction.commit();
-        session.close();
+        closeSessionAndCommitTransaction(session,transaction);
         return writers;
     }
 
@@ -57,7 +54,7 @@ public class PostgresWriterRepositoryImpl implements WriterRepository {
         Query query = session.createQuery("delete from Writer where id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
-
+        closeSessionAndCommitTransaction(session,transaction);
     }
     private void closeSessionAndCommitTransaction(Session session, Transaction transaction) {
         transaction.commit();
