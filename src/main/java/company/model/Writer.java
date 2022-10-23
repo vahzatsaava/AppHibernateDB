@@ -24,6 +24,12 @@ public class Writer {
         this.lastName = lastName;
     }
 
+    public Writer(int id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public int getId() {
         return id;
     }
@@ -62,7 +68,6 @@ public class Writer {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", posts=" + posts +
                 '}';
     }
 }

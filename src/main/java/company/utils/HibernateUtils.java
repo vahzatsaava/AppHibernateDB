@@ -1,20 +1,21 @@
-package company.postgres_db_utils;
+package company.utils;
 
 import company.model.Label;
 import company.model.Post;
 import company.model.Writer;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateSessionFactory {
+public class HibernateUtils {
     private static SessionFactory sessionFactory;
 
-    private HibernateSessionFactory() {
+    private HibernateUtils() {
 
     }
 
-    public static SessionFactory getSessionFactory() {
+    private static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration().configure();
@@ -30,5 +31,8 @@ public class HibernateSessionFactory {
             }
         }
         return sessionFactory;
+    }
+    public static Session getSession(){
+        return getSessionFactory().openSession();
     }
 }

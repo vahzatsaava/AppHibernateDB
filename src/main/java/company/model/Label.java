@@ -1,6 +1,7 @@
 package company.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "labels", schema = "public")
@@ -11,15 +12,19 @@ public class Label {
     private int id;
     @Column(name = "name")
     private String name;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "labels")
+    private List<Post> post;
 
     public Label() {
 
     }
 
     public Label(String name) {
+        this.name = name;
+    }
+
+    public Label(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -39,11 +44,11 @@ public class Label {
         this.name = name;
     }
 
-    public Post getPost() {
+    public List<Post> getPost() {
         return post;
     }
 
-    public void setPost(Post post) {
+    public void setPost(List<Post> post) {
         this.post = post;
     }
 

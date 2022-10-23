@@ -1,7 +1,6 @@
 package company.model;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 
@@ -17,19 +16,33 @@ public class Post {
     private Date created;
     @Column(name = "updated")
     private Date updated;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "writer_id")
     private Writer writer;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "post",cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "post_labels",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "label_id")}
+    )
     private List<Label> labels;
 
     public Post() {
     }
 
-    public Post(String content, Date created, Date updated) {
+    public Post(String content, Date created, Date updated, Writer writer) {
         this.content = content;
         this.created = created;
         this.updated = updated;
+        this.writer = writer;
+    }
+
+    public Post(int id, String content, Date created, Date updated, Writer writer) {
+        this.id = id;
+        this.content = content;
+        this.created = created;
+        this.updated = updated;
+        this.writer = writer;
     }
 
     public Writer getWriter() {
@@ -87,7 +100,7 @@ public class Post {
                 ", content='" + content + '\'' +
                 ", created=" + created +
                 ", updated=" + updated +
-                ", labels=" + labels +
+                ", writer=" + writer +
                 '}';
     }
 }

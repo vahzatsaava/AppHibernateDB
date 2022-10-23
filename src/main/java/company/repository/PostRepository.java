@@ -7,5 +7,5 @@ import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface PostRepository extends GenericRepository<Post, Integer>{
-    List<Label> getLabels(int postID);
+
 }
