@@ -4,6 +4,7 @@ import company.model.Label;
 import company.repository.LabelRepository;
 import company.utils.HibernateUtils;
 import org.hibernate.Session;
+
 import javax.persistence.Query;
 import java.util.List;
 

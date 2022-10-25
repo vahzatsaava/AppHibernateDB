@@ -6,7 +6,7 @@ import company.service.PostService;
 import java.util.List;
 
 public class PostController {
-    private PostService postService = new PostService();
+    private  PostService postService = new PostService();
 
     public Post save(Post post) {
         return postService.save(post);

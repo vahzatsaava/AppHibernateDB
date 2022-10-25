@@ -9,13 +9,14 @@ import java.util.List;
 public class LabelService {
     private final LabelRepository labelRepository;
 
+    public LabelService(LabelRepository labelRepository) {
+        this.labelRepository = labelRepository;
+    }
+
     public LabelService() {
         labelRepository = new HibernateLabelRepositoryImpl();
     }
 
-    public LabelService(LabelRepository labelRepository) {
-        this.labelRepository = labelRepository;
-    }
 
     public Label create(Label label) {
         return labelRepository.save(label);

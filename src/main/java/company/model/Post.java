@@ -30,6 +30,7 @@ public class Post {
     public Post() {
     }
 
+
     public Post(String content, Date created, Date updated, Writer writer) {
         this.content = content;
         this.created = created;
