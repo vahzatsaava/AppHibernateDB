@@ -2,6 +2,7 @@ package company.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "labels", schema = "public")
@@ -50,6 +51,19 @@ public class Label {
 
     public void setPost(List<Post> post) {
         this.post = post;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Label)) return false;
+        Label label = (Label) o;
+        return getId() == label.getId() && getName().equals(label.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName());
     }
 
     @Override
