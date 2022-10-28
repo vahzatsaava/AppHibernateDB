@@ -53,18 +53,6 @@ public class Label {
         this.post = post;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Label)) return false;
-        Label label = (Label) o;
-        return getId() == label.getId() && getName().equals(label.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName());
-    }
 
     @Override
     public String toString() {

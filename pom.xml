@@ -14,7 +14,7 @@
         <org.hibernate>5.6.1.Final</org.hibernate>
         <org.postgresql>42.5.0</org.postgresql>
         <org.flywaydb>9.4.0</org.flywaydb>
-        <org.mockito>4.8.0</org.mockito>
+        <org.mockito>4.8.1</org.mockito>
         <junit.version>4.13.2</junit.version>
         <org.junit.jupiter>5.9.0</org.junit.jupiter>
     </properties>
@@ -34,12 +34,14 @@
             <artifactId>flyway-core</artifactId>
             <version>${org.flywaydb}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>${org.mockito}</version>
+            <version>2.23.4</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -50,14 +52,14 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.9.0</version>
+            <version>${org.junit.jupiter}</version>
             <scope>test</scope>
         </dependency>
-
 
     </dependencies>
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
@@ -69,7 +71,10 @@
                 </configuration>
 
             </plugin>
+
         </plugins>
     </build>
+
+
 
 </project>

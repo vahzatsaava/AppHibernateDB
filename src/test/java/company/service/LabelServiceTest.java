@@ -1,33 +1,22 @@
 package company.service;
 
 import company.model.Label;
-import company.model.Post;
-import company.model.Writer;
 import company.repository.LabelRepository;
-import company.utils.HibernateUtils;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.io.Serializable;
-
+import java.util.ArrayList;
+import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 
 @RunWith(MockitoJUnitRunner.class)
-class LabelServiceTest {
-
+public class LabelServiceTest  {
     @Mock
     private LabelRepository labelRepository;
 
@@ -35,23 +24,52 @@ class LabelServiceTest {
     private LabelService labelService;
 
     @Test
-    void create() {
-
-        Mockito.when(labelRepository.save(any(Label.class))).thenReturn(new Label("abc"));
-        Assertions.assertEquals("abc",labelRepository.save(new Label("vvv")).getName());
-        //Assertions.assertEquals("abc", labelRepository.save(new Label("asd")).toString());
-
+    public void createTest_Successful() {
+        Mockito.when(labelRepository.save(any(Label.class))).thenReturn(new Label("Alfa"));
+        Assertions.assertEquals("Alfa", labelService.create(new Label(anyString())).getName());
+    }
+    @Test
+    public void createTest_unSuccessful() {
+        Mockito.when(labelRepository.save(any(Label.class))).thenReturn(new Label("Alfa"));
+        Assertions.assertNotEquals("abc", labelService.create(new Label(anyString())).getName());
     }
 
     @Test
-    void update() {
+    public void updateTest_Successful() {
+        Mockito.when(labelRepository.update(any(Label.class))).thenReturn(new Label("abc"));
+        Assertions.assertEquals("abc",labelService.update(new Label(anyString())).getName());
+    }
+    @Test
+    public void updateTest_unSuccessful() {
+        Mockito.when(labelRepository.update(any(Label.class))).thenReturn(new Label("abc"));
+        Assertions.assertNotEquals("ccc",labelService.update(new Label(anyString())).getName());
     }
 
     @Test
-    void getAll() {
+    public void getAllTest_Successful() {
+        List<Label> labels = new ArrayList<>();
+        labels.add(new Label("Garry"));
+        labels.add(new Label("Charly"));
+        Mockito.when(labelRepository.getAll()).thenReturn(labels);
+        Assertions.assertEquals(labels,labelService.getAll());
+    }
+    @Test
+    public void getAllTest_unSuccessful() {
+        List<Label> labels = new ArrayList<>();
+        labels.add(new Label("Garry"));
+        labels.add(new Label("Charly"));
+        Mockito.when(labelRepository.getAll()).thenReturn(labels);
+        Assertions.assertNotEquals(null,labelService.getAll());
     }
 
     @Test
-    void findById() {
+    public void findByIdTest_Successful() {
+        Mockito.when(labelRepository.findByID(Mockito.anyInt())).thenReturn(new Label("abc"));
+        Assertions.assertEquals("abc",labelService.findById(Mockito.anyInt()).getName());
+    }
+    @Test
+    public void findByIdTest_unSuccessful() {
+        Mockito.when(labelRepository.findByID(Mockito.anyInt())).thenReturn(new Label("abc"));
+        Assertions.assertNotEquals("aaa",labelService.findById(Mockito.anyInt()).getName());
     }
 }
