@@ -16,18 +16,26 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LabelServiceTest  {
+public class LabelServiceTest {
     @Mock
     private LabelRepository labelRepository;
 
     @InjectMocks
     private LabelService labelService;
 
+    private final List<Label> listLabels() {
+        List<Label> labels = new ArrayList<>();
+        labels.add(new Label("Garry"));
+        labels.add(new Label("Charly"));
+        return labels;
+    }
+
     @Test
     public void createTest_Successful() {
         Mockito.when(labelRepository.save(any(Label.class))).thenReturn(new Label("Alfa"));
         Assertions.assertEquals("Alfa", labelService.create(new Label(anyString())).getName());
     }
+
     @Test
     public void createTest_unSuccessful() {
         Mockito.when(labelRepository.save(any(Label.class))).thenReturn(new Label("Alfa"));
@@ -47,19 +55,13 @@ public class LabelServiceTest  {
 
     @Test
     public void getAllTest_Successful() {
-        List<Label> labels = new ArrayList<>();
-        labels.add(new Label("Garry"));
-        labels.add(new Label("Charly"));
-        Mockito.when(labelRepository.getAll()).thenReturn(labels);
-        Assertions.assertEquals(labels,labelService.getAll());
+        Mockito.when(labelRepository.getAll()).thenReturn(listLabels());
+        Assertions.assertEquals(listLabels().toString(), labelService.getAll().toString());
     }
     @Test
     public void getAllTest_unSuccessful() {
-        List<Label> labels = new ArrayList<>();
-        labels.add(new Label("Garry"));
-        labels.add(new Label("Charly"));
-        Mockito.when(labelRepository.getAll()).thenReturn(labels);
-        Assertions.assertNotEquals(null,labelService.getAll());
+        Mockito.when(labelRepository.getAll()).thenReturn(listLabels());
+        Assertions.assertNotEquals(null, labelService.getAll());
     }
 
     @Test
